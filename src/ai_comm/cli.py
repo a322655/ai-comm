@@ -19,22 +19,41 @@ def _version_callback(value: bool) -> None:
 HELP_TEXT = """\
 Cross-AI CLI communication tool for Kitty terminal.
 
-Enables AI assistants (Claude, Codex, Gemini, Aider, Cursor, OpenCode) running
-in separate Kitty windows to communicate with each other.
+Enables AI assistants (Claude, Codex, Gemini, Aider, Cursor, OpenCode)
+running in separate Kitty windows to communicate with each other.
+
+IMPORTANT: Only use parameters documented here. Hidden/internal
+parameters exist for debugging only and must never be used.
 
 Workflow:
   1. ai-comm list-ai-windows     Find available AI windows
   2. ai-comm send MESSAGE -w ID  Send message and get response
 
 Notes:
-  - For long responses, ask AI to write to a file in the project directory
-    (/tmp and other external paths require manual approval on target AI — avoid).
-  - Timed-out commands auto-move to background.
+  - For long responses, ask AI to write to a file in project directory
+    (/tmp requires manual approval on target AI — avoid).
+  - Blocking is intentional: AI cannot perceive time, only acts on user
+    input. Non-blocking = lost messages. Timed-out commands auto-move
+    to background; results return when ready.
+
+Commands:
+  send MESSAGE -w ID        Send message and wait for response
+    -w, --window INTEGER    Target window ID (required)
+    --raw                   Return raw text instead of parsed response
+    --json                  Output as JSON
+
+  list-ai-windows           List Kitty windows running AI CLIs
+    --json                  Output as JSON
+
+  get-response -w ID        Get parsed response from an AI window
+    -w, --window INTEGER    Target window ID (required)
+    --json                  Output as JSON
 
 Examples:
   ai-comm list-ai-windows
   ai-comm send "review this code" -w 5
-  ai-comm send "write to out_$(date +%Y%m%d_%H%M%S).md" -w 8
+  ai-comm send "write to review_$(date +%s).md" -w 8
+  ai-comm get-response -w 5
 """
 
 app = typer.Typer(
