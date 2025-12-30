@@ -27,33 +27,21 @@ parameters exist for debugging only and must never be used.
 
 Workflow:
   1. ai-comm list-ai-windows     Find available AI windows
-  2. ai-comm send MESSAGE -w ID  Send message and get response
+  2. ai-comm send <MESSAGE> -w <ID>  Send message and get response
 
 Notes:
+  - AI assistants MUST use ONLY the two Workflow commands without
+    any additional parameters. Other parameters are forbidden for AI use.
   - For long responses, ask AI to write to a file in project directory
     (/tmp requires manual approval on target AI — avoid).
   - Blocking is intentional: AI cannot perceive time, only acts on user
     input. Non-blocking = lost messages. Timed-out commands auto-move
     to background; results return when ready.
 
-Commands:
-  send MESSAGE -w ID        Send message and wait for response
-    -w, --window INTEGER    Target window ID (required)
-    --raw                   Return raw text instead of parsed response
-    --json                  Output as JSON
-
-  list-ai-windows           List Kitty windows running AI CLIs
-    --json                  Output as JSON
-
-  get-response -w ID        Get parsed response from an AI window
-    -w, --window INTEGER    Target window ID (required)
-    --json                  Output as JSON
-
 Examples:
   ai-comm list-ai-windows
   ai-comm send "review this code" -w 5
   ai-comm send "write to review_$(date +%s).md" -w 8
-  ai-comm get-response -w 5
 """
 
 app = typer.Typer(

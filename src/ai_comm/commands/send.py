@@ -36,10 +36,10 @@ def send(
         typer.Option("--window", "-w", help="Target window ID (from list-ai-windows)"),
     ],
     timeout: Annotated[
-        int, typer.Option("--timeout", "-t", help="Timeout in seconds", hidden=True)
+        int, typer.Option("--timeout", "-t", help="Timeout in seconds")
     ] = 1800,
     idle_time: Annotated[
-        int, typer.Option("--idle-time", help="Idle time in seconds", hidden=True)
+        int, typer.Option("--idle-time", help="Idle time in seconds")
     ] = 3,
     parser: Annotated[
         str,
@@ -47,7 +47,6 @@ def send(
             "--parser",
             "-p",
             help="Response parser (auto, claude, codex, gemini, aider...)",
-            hidden=True,
         ),
     ] = "auto",
     raw: Annotated[
@@ -61,7 +60,6 @@ def send(
         typer.Option(
             "--no-wait",
             help="Human terminal use only. AI agents will forget to get-response",
-            hidden=True,
         ),
     ] = False,
     as_json: Annotated[bool, typer.Option("--json", help="Output as JSON")] = False,

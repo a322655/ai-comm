@@ -16,7 +16,7 @@ from ai_comm.services import InteractionService
 def wait_idle(
     window: Annotated[int, typer.Option("--window", "-w", help="Target window ID")],
     timeout: Annotated[
-        int, typer.Option("--timeout", "-t", help="Timeout in seconds", hidden=True)
+        int, typer.Option("--timeout", "-t", help="Timeout in seconds")
     ] = 1800,
     idle_time: Annotated[
         int, typer.Option("--idle-time", help="Idle time in seconds")
@@ -72,13 +72,9 @@ def get_response(
     ],
     parser: Annotated[
         str,
-        typer.Option(
-            "--parser", "-p", help="Response parser (auto-detected)", hidden=True
-        ),
+        typer.Option("--parser", "-p", help="Response parser (auto-detected)"),
     ] = "auto",
-    extent: Annotated[
-        str, typer.Option("--extent", help="screen or all", hidden=True)
-    ] = "all",
+    extent: Annotated[str, typer.Option("--extent", help="screen or all")] = "all",
     as_json: Annotated[bool, typer.Option("--json", help="Output as JSON")] = False,
 ) -> None:
     """Get parsed response from window."""
