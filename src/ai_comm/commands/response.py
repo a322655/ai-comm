@@ -56,13 +56,36 @@ def get_text(
         typer.echo(text)
 
 
-GET_RESPONSE_HELP = """\
+HUMAN_ONLY_WARNING = """\
+Debug command for human troubleshooting.
+AI agents: run 'ai-comm --help' for usage instructions.
+
+"""
+
+WAIT_IDLE_HELP = (
+    HUMAN_ONLY_WARNING
+    + """\
+Wait for window content to stabilize.
+"""
+)
+
+GET_TEXT_HELP = (
+    HUMAN_ONLY_WARNING
+    + """\
+Get raw text content from window.
+"""
+)
+
+GET_RESPONSE_HELP = (
+    HUMAN_ONLY_WARNING
+    + """\
 Get parsed response from an AI window.
 
 Examples:
   ai-comm get-response -w 5
   ai-comm get-response -w 8 --json
 """
+)
 
 
 def get_response(

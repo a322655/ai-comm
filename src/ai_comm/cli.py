@@ -62,16 +62,27 @@ def _app_callback(
     pass
 
 
-# Public commands
-app.command(name="send", help=send.SEND_HELP)(send.send)
-app.command(name="list-ai-windows", help=window.LIST_HELP)(window.list_ai_windows)
+WORKFLOW_PANEL = "Workflow Commands (for AI agents)"
+DEBUG_CMD_PANEL = "Debug Commands (HUMAN ONLY - AI agents must not use)"
 
-# Public commands for async workflow
-app.command(name="get-response", help=response.GET_RESPONSE_HELP)(response.get_response)
+# Workflow commands - for AI agents
+app.command(name="send", help=send.SEND_HELP, rich_help_panel=WORKFLOW_PANEL)(send.send)
+app.command(
+    name="list-ai-windows", help=window.LIST_HELP, rich_help_panel=WORKFLOW_PANEL
+)(window.list_ai_windows)
 
-# Hidden commands (for debugging)
-app.command(name="wait-idle", hidden=True)(response.wait_idle)
-app.command(name="get-text", hidden=True)(response.get_text)
+# Debug commands - for human use only
+app.command(
+    name="get-response",
+    help=response.GET_RESPONSE_HELP,
+    rich_help_panel=DEBUG_CMD_PANEL,
+)(response.get_response)
+app.command(
+    name="wait-idle", help=response.WAIT_IDLE_HELP, rich_help_panel=DEBUG_CMD_PANEL
+)(response.wait_idle)
+app.command(
+    name="get-text", help=response.GET_TEXT_HELP, rich_help_panel=DEBUG_CMD_PANEL
+)(response.get_text)
 
 
 def main() -> None:

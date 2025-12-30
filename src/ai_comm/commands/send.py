@@ -29,6 +29,9 @@ Examples:
 """
 
 
+DEBUG_PANEL = "Debug Options (HUMAN ONLY - AI agents must not use)"
+
+
 def send(
     message: Annotated[str, typer.Argument(help="Message to send to the AI")],
     window: Annotated[
@@ -36,10 +39,16 @@ def send(
         typer.Option("--window", "-w", help="Target window ID (from list-ai-windows)"),
     ],
     timeout: Annotated[
-        int, typer.Option("--timeout", "-t", help="Timeout in seconds")
+        int,
+        typer.Option(
+            "--timeout", "-t", help="Timeout in seconds", rich_help_panel=DEBUG_PANEL
+        ),
     ] = 1800,
     idle_time: Annotated[
-        int, typer.Option("--idle-time", help="Idle time in seconds")
+        int,
+        typer.Option(
+            "--idle-time", help="Idle time in seconds", rich_help_panel=DEBUG_PANEL
+        ),
     ] = 3,
     parser: Annotated[
         str,
@@ -47,22 +56,29 @@ def send(
             "--parser",
             "-p",
             help="Response parser (auto, claude, codex, gemini, aider...)",
+            rich_help_panel=DEBUG_PANEL,
         ),
     ] = "auto",
     raw: Annotated[
         bool,
         typer.Option(
-            "--raw", help="Return raw terminal text instead of parsed response"
+            "--raw",
+            help="Return raw terminal text instead of parsed response",
+            rich_help_panel=DEBUG_PANEL,
         ),
     ] = False,
     no_wait: Annotated[
         bool,
         typer.Option(
             "--no-wait",
-            help="Human terminal use only. AI agents will forget to get-response",
+            help="Send without waiting for response",
+            rich_help_panel=DEBUG_PANEL,
         ),
     ] = False,
-    as_json: Annotated[bool, typer.Option("--json", help="Output as JSON")] = False,
+    as_json: Annotated[
+        bool,
+        typer.Option("--json", help="Output as JSON", rich_help_panel=DEBUG_PANEL),
+    ] = False,
 ) -> None:
     """Send message to AI window and wait for response."""
     try:
