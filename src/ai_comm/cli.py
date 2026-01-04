@@ -29,6 +29,11 @@ Workflow:
   1. ai-comm list-ai-windows     Find available AI windows
   2. ai-comm send <MESSAGE> -w <ID>  Send message and get response
 
+Protocol:
+  - Request-response only. Receiver must NOT send new messages back
+    immediately after responding—this causes deadlock.
+  - If you need the sender to act, include the request in your response.
+
 Notes:
   - AI assistants MUST use ONLY the two Workflow commands without
     any additional parameters. Other parameters are forbidden for AI use.
@@ -37,11 +42,6 @@ Notes:
   - Blocking is intentional: AI cannot perceive time, only acts on user
     input. Non-blocking = lost messages. Timed-out commands auto-move
     to background; results return when ready.
-
-Examples:
-  ai-comm list-ai-windows
-  ai-comm send "review this code" -w 5
-  ai-comm send "write to review_$(date +%s).md" -w 8
 """
 
 app = typer.Typer(
