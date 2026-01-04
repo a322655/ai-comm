@@ -15,7 +15,7 @@ Cross-AI CLI communication tool for Kitty terminal. Enables AI assistants runnin
 
 ## Important Notes
 
-1. **Request-response protocol only.** After receiving a message via ai-comm, you must NOT immediately send a new message back. If you need the sender to do something, include the request in your response text. Sending a new message while the sender is waiting creates a deadlock.
+1. **Replying to ai-comm messages.** Just output your response as normal text—the sender automatically captures your terminal output. Do NOT use ai-comm to reply (causes deadlock). If you need the sender to act, include the request in your response.
 
 2. **For long responses, request file output.** Bash tool has a 30000-character limit. If you expect a long response, ask the AI to write to a markdown file in the project directory (`/tmp` and other external paths require manual approval on target AI — avoid them).
 
