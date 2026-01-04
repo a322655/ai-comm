@@ -30,8 +30,9 @@ Workflow:
   2. ai-comm send <MESSAGE> -w <ID>  Send message and get response
 
 Protocol:
-  - Request-response only. Receiver must NOT send new messages back
-    immediately after responding—this causes deadlock.
+  - When you RECEIVE an ai-comm message: just output your response as
+    normal text. The sender automatically captures your terminal output.
+    Do NOT use ai-comm to reply—this causes deadlock.
   - If you need the sender to act, include the request in your response.
 
 Notes:
