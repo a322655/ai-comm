@@ -12,14 +12,14 @@ List Kitty windows running AI CLIs.
 ai-comm list-ai-windows [--json]
 ```
 
-Output columns: ID (window ID for -w option), CLI (detected AI type), CWD.
+Output columns: ID (window ID for -w option), CLI (detected AI type), TITLE, CWD.
 
 Example output:
 
 ```bash
-  ID  CLI         CWD
-   5  claude      /home/user/project
-   8  aider       /home/user/project
+  ID  CLI         TITLE                           CWD
+   5  claude      Reviewing authentication        /home/user/project
+   8  aider       Refactoring database layer      /home/user/project
 ```
 
 ## send
