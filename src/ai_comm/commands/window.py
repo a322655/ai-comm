@@ -6,7 +6,7 @@ import json
 from typing import Annotated
 
 import typer
-from wcwidth import wcswidth
+from wcwidth import wcswidth, wcwidth
 
 from ai_comm.kitten_client import KittenClient, KittenError
 
@@ -15,7 +15,7 @@ def _truncate_to_width(s: str, max_width: int) -> str:
     """Truncate string to fit within max display width."""
     width = 0
     for i, char in enumerate(s):
-        char_width = max(wcswidth(char), 0)
+        char_width = max(wcwidth(char), 0)
         if width + char_width > max_width - 3:
             return s[:i] + "..."
         width += char_width
