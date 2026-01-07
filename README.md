@@ -56,9 +56,9 @@ Add instructions to your AI’s project file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.
 
    ```bash
    ai-comm list-ai-windows
-   #   ID  CLI         CWD
-   #   11  codex       /home/user/project
-   #   21  gemini      /home/user/project
+   #   ID  CLI         TITLE                           CWD
+   #   11  codex       Reviewing authentication        /home/user/project
+   #   21  gemini      Analyzing database schema       /home/user/project
 
    ai-comm send "Review src/main.py for bugs" -w 11
    # Returns Codex's response

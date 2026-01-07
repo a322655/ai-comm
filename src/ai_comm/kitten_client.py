@@ -170,7 +170,7 @@ class KittenClient:
         """List windows running AI CLIs.
 
         Returns:
-            List of AI window info dicts with id, cli, cwd
+            List of AI window info dicts with id, cli, cwd, title
         """
         result = self._call("list-ai-windows")
         ai_windows: list[dict[str, Any]] = result.data.get("ai_windows", [])
