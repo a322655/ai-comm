@@ -13,19 +13,13 @@ from typing import Any
 class KittenError(Exception):
     """Base exception for kitten errors."""
 
-    pass
-
 
 class WindowNotFoundError(KittenError):
     """Window not found."""
 
-    pass
-
 
 class KittenCallError(KittenError):
     """Failed to call kitten."""
-
-    pass
 
 
 @dataclass
