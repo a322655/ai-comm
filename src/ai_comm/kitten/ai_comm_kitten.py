@@ -208,8 +208,14 @@ def list_ai_windows(boss: Boss) -> dict[str, Any]:
                         break
 
                 if detected_cli:
+                    window_title = getattr(window, "title", "")
                     ai_windows.append(
-                        {"id": window.id, "cli": detected_cli, "cwd": detected_cwd}
+                        {
+                            "id": window.id,
+                            "cli": detected_cli,
+                            "cwd": detected_cwd,
+                            "title": window_title,
+                        }
                     )
 
     return {"status": "ok", "ai_windows": ai_windows}
