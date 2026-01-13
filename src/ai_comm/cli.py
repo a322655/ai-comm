@@ -17,6 +17,8 @@ def _version_callback(value: bool) -> None:
 
 
 HELP_TEXT = """\
+WARNING: AI must NOT truncate help output (no `| head` etc.). Read in full.
+
 Cross-AI CLI communication tool for Kitty terminal.
 
 Enables AI assistants (Claude, Codex, Gemini, Aider, Cursor, OpenCode)
