@@ -34,7 +34,9 @@ Workflow:
 Protocol:
   - When you RECEIVE an ai-comm message: just output your response as
     normal text. The sender automatically captures your terminal output.
-    Do NOT use ai-comm to reply—this causes deadlock.
+    Do NOT use ai-comm to reply (especially not to the sender's window ID
+    shown in the message header)—this causes deadlock: both sides wait
+    for each other indefinitely.
   - If you need the sender to act, include the request in your response.
 
 Notes:
