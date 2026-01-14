@@ -17,9 +17,13 @@ class AiderAdapter(AIAdapter):
 
     TOKEN_PATTERN = re.compile(r"^Tokens:\s+[\d.]+[kM]?\s+sent")
 
-    def format_message(self, message: str, sender: str | None = None) -> str:
+    def format_message(
+        self,
+        message: str,
+        sender_info: dict[str, str | int | None] | None = None,
+    ) -> str:
         """Prepend /ask to prevent automatic file edits."""
-        base_message = super().format_message(message, sender)
+        base_message = super().format_message(message, sender_info)
         return "/ask " + base_message
 
     def extract_last_response(self, text: str) -> str:

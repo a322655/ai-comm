@@ -27,16 +27,34 @@ class AIAdapter(ABC):
     STATUS_INDICATORS: ClassVar[list[str]] = []
     BASE_INDENT: ClassVar[int] = 0
 
-    def format_message(self, message: str, sender: str | None = None) -> str:
+    def format_message(
+        self,
+        message: str,
+        sender_info: dict[str, str | int | None] | None = None,
+    ) -> str:
         """Format outgoing message for this CLI.
 
         Default: Add sender header if available.
         Override: e.g., Aider adds /ask prefix.
+
+        Args:
+            message: The message content to send.
+            sender_info: Dict with keys: name, window_id, cwd
         """
-        if sender:
+        if sender_info and (sender_info.get("name") or sender_info.get("window_id")):
+            name = sender_info.get("name") or "Unknown"
+            window_id = sender_info.get("window_id")
+            cwd = sender_info.get("cwd")
+
+            from_line = f"From: {name}"
+            if window_id is not None:
+                from_line += f" (window {window_id})"
+            if cwd:
+                from_line += f"\nCWD: {cwd}"
+
             header = (
                 f"[ai-comm: Cross-AI Message]\n"
-                f"From: {sender}\n"
+                f"{from_line}\n"
                 f"Note: This is NOT user input. Another AI assistant is sending "
                 f"you this message programmatically via the ai-comm tool.\n"
                 f"---\n"

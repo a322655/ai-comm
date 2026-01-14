@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import time
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from ai_comm.adapters import get_adapter
@@ -25,19 +26,32 @@ class InteractionService:
         """Initialize with injected client."""
         self.client = client
 
-    def get_sender_name(self) -> str | None:
-        """Get the sender CLI name from current window."""
+    def get_sender_info(self) -> dict[str, str | int | None]:
+        """Get sender information including CLI name, window ID, and CWD.
+
+        Returns:
+            Dict with keys: name, window_id, cwd
+        """
+        info: dict[str, str | int | None] = {
+            "name": None,
+            "window_id": None,
+            "cwd": str(Path.cwd()),
+        }
+
         window_id_str = os.environ.get("KITTY_WINDOW_ID")
         if not window_id_str:
-            return None
+            return info
+
         try:
             window_id = int(window_id_str)
+            info["window_id"] = window_id
             cli_type = self.client.get_window_cli(window_id)
             if cli_type:
-                return get_display_name(cli_type)
+                info["name"] = get_display_name(cli_type)
         except (ValueError, Exception):
             pass
-        return None
+
+        return info
 
     def send_message(
         self,
@@ -49,8 +63,8 @@ class InteractionService:
         cli_type = self.client.get_window_cli(window_id)
         adapter = get_adapter(cli_type or "generic")
 
-        sender = self.get_sender_name() if add_sender_header else None
-        formatted = adapter.format_message(message, sender)
+        sender_info = self.get_sender_info() if add_sender_header else None
+        formatted = adapter.format_message(message, sender_info)
 
         self.client.send_text(window_id, formatted)
         time.sleep(0.1)
