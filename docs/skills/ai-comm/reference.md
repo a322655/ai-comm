@@ -30,11 +30,11 @@ Send message to AI window and wait for response.
 ai-comm send MESSAGE --window ID [--raw] [--json]
 ```
 
-| Option | Description |
-|--------|-------------|
-| `--window, -w` | Target window ID (required) |
-| `--raw` | Return raw terminal text instead of parsed response |
-| `--json` | Output as JSON |
+| Option         | Description                                         |
+| -------------- | --------------------------------------------------- |
+| `--window, -w` | Target window ID (required)                         |
+| `--raw`        | Return raw terminal text instead of parsed response |
+| `--json`       | Output as JSON                                      |
 
 The message is automatically wrapped with sender metadata. For Aider, /ask is
 prepended to prevent automatic file edits.
@@ -47,7 +47,7 @@ Get parsed response from an AI window. Use after sending with --no-wait.
 ai-comm get-response --window ID [--json]
 ```
 
-| Option | Description |
-|--------|-------------|
+| Option         | Description                 |
+| -------------- | --------------------------- |
 | `--window, -w` | Target window ID (required) |
-| `--json` | Output as JSON |
+| `--json`       | Output as JSON              |

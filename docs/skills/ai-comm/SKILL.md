@@ -1,6 +1,6 @@
 ---
 name: ai-comm
-description: Cross-AI CLI communication for Kitty terminal. Use when collaborating with other AI assistants (Codex, Gemini, Aider, Cursor, OpenCode), delegating tasks, or requesting code review.
+description: Use when collaborating with other AI assistants (Codex, Gemini, Aider, Cursor, OpenCode), delegating tasks, or requesting code review.
 allowed-tools: Bash, Read
 ---
 
@@ -15,7 +15,7 @@ Cross-AI CLI communication tool for Kitty terminal. Enables AI assistants runnin
 
 ## Important Notes
 
-1. **Replying to ai-comm messages.** Just output your response as normal text—the sender automatically captures your terminal output. Do NOT use ai-comm to reply (causes deadlock). If you need the sender to act, include the request in your response.
+1. **Replying to ai-comm messages.** Just output your response as normal text—the sender automatically captures your terminal output. Do NOT use ai-comm to reply (especially not to the sender's window ID shown in the message header)—this causes deadlock. If you need the sender to act, include the request in your response.
 
 2. **For long responses, request file output.** Bash tool has a 30000-character limit. If you expect a long response, ask the AI to write to a markdown file in the project directory (`/tmp` and other external paths require manual approval on target AI — avoid them).
 
