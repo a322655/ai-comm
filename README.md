@@ -36,7 +36,7 @@ listen_on unix:/tmp/kitty-${USER}
 
 ### 3. Configure Your AI
 
-Add instructions to your AI’s project file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, etc.) or skills system. An example Claude Code skill is provided in [`skills/ai-comm/`](skills/ai-comm/).
+Add instructions to your AI’s project file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, etc.) or skills system. See [`docs/AGENTS.md`](docs/AGENTS.md) for reference configuration. An example Claude Code skill is provided in [`docs/skills/ai-comm/`](docs/skills/ai-comm/).
 
 ## Usage
 
@@ -72,14 +72,14 @@ Add instructions to your AI’s project file (`CLAUDE.md`, `AGENTS.md`, `GEMINI.
 
 ## Supported CLIs
 
-| CLI | Notes |
-|-----|-------|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | — |
-| [Codex CLI](https://github.com/openai/codex) | — |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | — |
-| [Aider](https://aider.chat/) | Auto-prefixes `/ask` |
-| [Cursor Agent](https://cursor.sh/) | — |
-| [OpenCode](https://github.com/opencode-ai/opencode) | Uses export for responses |
+| CLI                                                           | Notes                     |
+| ------------------------------------------------------------- | ------------------------- |
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | —                         |
+| [Codex CLI](https://github.com/openai/codex)                  | —                         |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli)     | —                         |
+| [Aider](https://aider.chat/)                                  | Auto-prefixes `/ask`      |
+| [Cursor Agent](https://cursor.sh/)                            | —                         |
+| [OpenCode](https://github.com/opencode-ai/opencode)           | Uses export for responses |
 
 ## Troubleshooting
 
@@ -109,4 +109,4 @@ uv run mypy src/
 
 ## License
 
-MIT
+[MIT](LICENSE)
