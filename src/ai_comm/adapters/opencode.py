@@ -8,15 +8,16 @@ import subprocess
 from pathlib import Path
 from typing import TYPE_CHECKING, ClassVar
 
+from ai_comm.parsers.base import ResponseCollector
 from ai_comm.parsers.utils import clean_response_lines
 
-from .base import AIAdapter, ResponseCollector
+from .base import AIAdapter
 
 if TYPE_CHECKING:
     from ai_comm.kitten_client import KittenClient
 
 
-class OpenCodeAdapter(AIAdapter):
+class OpencodeAdapter(AIAdapter):
     """Adapter for OpenCode CLI responses."""
 
     name: ClassVar[str] = "opencode"
@@ -115,6 +116,9 @@ class OpenCodeAdapter(AIAdapter):
             return line[:panel_col].rstrip()
         return line.rstrip()
 
+    SKIP_CHARS: ClassVar[tuple[str, ...]] = ("╹", "▀")
+    BLOCK_END_PREFIXES: ClassVar[tuple[str, ...]] = ("▣", "┃")
+
     def extract_last_response(self, text: str) -> str:
         """Extract the last response from OpenCode output."""
         lines = text.split("\n")
@@ -124,17 +128,10 @@ class OpenCodeAdapter(AIAdapter):
         for line in lines:
             stripped = line.strip()
 
-            if self.is_status_line(line):
+            if self.is_status_line(line) or any(c in stripped for c in self.SKIP_CHARS):
                 continue
 
-            if "╹" in stripped or "▀" in stripped:
-                continue
-
-            if stripped.startswith("▣"):
-                collector.end_current()
-                continue
-
-            if stripped.startswith("┃"):
+            if stripped.startswith(self.BLOCK_END_PREFIXES):
                 collector.end_current()
                 continue
 

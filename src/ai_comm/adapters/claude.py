@@ -5,9 +5,10 @@ from __future__ import annotations
 import re
 from typing import ClassVar
 
+from ai_comm.parsers.base import ResponseCollector
 from ai_comm.parsers.utils import is_separator_line
 
-from .base import AIAdapter, ResponseCollector
+from .base import AIAdapter
 
 
 class ClaudeAdapter(AIAdapter):
@@ -24,17 +25,11 @@ class ClaudeAdapter(AIAdapter):
 
     SPINNER_CHARS = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
 
+    CONTROL_PREFIXES: ClassVar[tuple[str, ...]] = (">", "∴", "⎿", "╭", "╰")
+
     def _is_control_element(self, stripped: str) -> bool:
         """Check if line is a control element that ends a response."""
-        if stripped.startswith(">"):
-            return True
-        if stripped.startswith("∴"):
-            return True
-        if stripped.startswith("⎿"):
-            return True
-        if stripped.startswith(("╭", "╰")):
-            return True
-        return is_separator_line(stripped)
+        return stripped.startswith(self.CONTROL_PREFIXES) or is_separator_line(stripped)
 
     def extract_last_response(self, text: str) -> str:
         """Extract the last response from Claude Code output."""

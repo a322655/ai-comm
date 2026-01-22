@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import importlib
 
-from .base import AIAdapter, ResponseCollector
+from ai_comm.parsers.base import ResponseCollector
+
+from .base import AIAdapter
 from .generic import GenericAdapter
 
 
