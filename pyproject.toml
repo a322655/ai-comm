@@ -1,6 +1,6 @@
 [project]
 name = "ai-comm"
-version = "0.2.8"
+version = "0.2.9"
 description = "Cross-AI CLI communication tool for kitty terminal"
 readme = "README.md"
 license = "MIT"
