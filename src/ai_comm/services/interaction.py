@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from ai_comm.adapters import get_adapter
+from ai_comm.kitten_client import KittenError
 from ai_comm.polling import wait_for_idle
 from ai_comm.registry import get_display_name
 
@@ -44,12 +45,18 @@ class InteractionService:
 
         try:
             window_id = int(window_id_str)
-            info["window_id"] = window_id
+        except ValueError:
+            return info
+
+        info["window_id"] = window_id
+
+        try:
             cli_type = self.client.get_window_cli(window_id)
-            if cli_type:
-                info["name"] = get_display_name(cli_type)
-        except (ValueError, Exception):
-            pass
+        except KittenError:
+            return info
+
+        if cli_type:
+            info["name"] = get_display_name(cli_type)
 
         return info
 

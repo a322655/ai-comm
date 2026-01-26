@@ -13,6 +13,7 @@ class PollingTimeoutError(Exception):
     """Raised when polling times out."""
 
     def __init__(self, timeout: float, elapsed: float) -> None:
+        """Initialize timeout details."""
         super().__init__(f"Timeout after {elapsed:.1f}s (limit: {timeout}s)")
         self.timeout = timeout
         self.elapsed = elapsed

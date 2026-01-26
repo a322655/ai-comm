@@ -65,6 +65,7 @@ class ResponseCollector:
     """
 
     def __init__(self) -> None:
+        """Initialize response buffers."""
         self.responses: list[list[str]] = []
         self.current: list[str] = []
         self.in_response: bool = False
