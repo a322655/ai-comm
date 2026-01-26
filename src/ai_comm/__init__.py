@@ -1,3 +1,5 @@
 """Cross-AI CLI communication tool for kitty terminal."""
 
-__version__ = "0.2.9"
+from importlib.metadata import version
+
+__version__ = version("ai-comm")
