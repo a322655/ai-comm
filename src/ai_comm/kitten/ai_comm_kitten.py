@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Simplified ai-comm kitten providing atomic operations via Boss API.
+"""Simplified ai-comm kitten providing atomic operations via Boss API.
 
 This kitten is called by the ai-comm CLI tool. It provides low-level
 operations that require access to kitty's Boss API.
@@ -77,7 +76,7 @@ def parse_args(args: list[str]) -> argparse.Namespace:
 
 def compute_hash(text: str) -> str:
     """Compute short hash of text content."""
-    return hashlib.md5(text.encode()).hexdigest()[:16]
+    return hashlib.sha256(text.encode()).hexdigest()[:16]
 
 
 def get_window(boss: Boss, window_id: int) -> Window | None:
@@ -194,12 +193,14 @@ def list_ai_windows(boss: Boss) -> dict[str, Any]:
                 fg_processes = getattr(child, "foreground_processes", None)
                 if callable(fg_processes):
                     fg_processes = fg_processes()
-                if not fg_processes:
+                if not isinstance(fg_processes, list) or not fg_processes:
                     continue
 
                 detected_cli: str | None = None
                 detected_cwd: str = ""
                 for proc in fg_processes:
+                    if not isinstance(proc, dict):
+                        continue
                     cmdline = proc.get("cmdline", [])
                     cli = detect_ai_cli(cmdline)
                     if cli:
