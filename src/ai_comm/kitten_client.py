@@ -166,13 +166,19 @@ class KittenClient:
         )
         return result.data.get("idle", False), result.data.get("hash", "")
 
-    def list_ai_windows(self) -> list[dict[str, Any]]:
+    def list_ai_windows(self, *, include_self: bool = False) -> list[dict[str, Any]]:
         """List windows running AI CLIs.
+
+        Args:
+            include_self: If True, include the caller's own window in results
 
         Returns:
             List of AI window info dicts with id, cli, cwd, title
         """
-        result = self._call("list-ai-windows")
+        args = ["list-ai-windows"]
+        if include_self:
+            args.append("--include-self")
+        result = self._call(*args)
         ai_windows: list[dict[str, Any]] = result.data.get("ai_windows", [])
         return ai_windows
 
@@ -185,7 +191,7 @@ class KittenClient:
         Returns:
             CLI name (e.g., "claude", "codex") or None if not an AI window
         """
-        ai_windows = self.list_ai_windows()
+        ai_windows = self.list_ai_windows(include_self=True)
         for w in ai_windows:
             if w["id"] == window_id:
                 cli: str = w["cli"]

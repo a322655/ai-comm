@@ -69,7 +69,8 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     check_idle.add_argument("--last-hash", default="")
 
     # list-ai-windows
-    subparsers.add_parser("list-ai-windows")
+    list_ai = subparsers.add_parser("list-ai-windows")
+    list_ai.add_argument("--include-self", action="store_true")
 
     return parser.parse_args(args)
 
@@ -179,13 +180,25 @@ def detect_ai_cli(cmdline_args: list[str]) -> str | None:
     return None
 
 
-def list_ai_windows(boss: Boss) -> dict[str, Any]:
-    """List windows running AI CLIs."""
+def list_ai_windows(
+    boss: Boss, self_window_id: int, *, include_self: bool = False
+) -> dict[str, Any]:
+    """List windows running AI CLIs.
+
+    Args:
+        boss: Kitty Boss instance
+        self_window_id: The window ID of the caller (to exclude by default)
+        include_self: If True, include the caller's window in results
+    """
     ai_windows: list[dict[str, Any]] = []
 
     for os_window in boss.os_window_map.values():
         for tab in os_window.tabs:
             for window in tab.windows:
+                # Skip self unless explicitly requested
+                if not include_self and window.id == self_window_id:
+                    continue
+
                 child = getattr(window, "child", None)
                 if not child:
                     continue
@@ -253,7 +266,9 @@ def handle_result(
         result = check_idle(boss, parsed.window, parsed.last_hash)
 
     elif parsed.command == "list-ai-windows":
-        result = list_ai_windows(boss)
+        result = list_ai_windows(
+            boss, target_window_id, include_self=parsed.include_self
+        )
 
     else:
         result = {"status": "error", "message": f"Unknown command: {parsed.command}"}

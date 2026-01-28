@@ -37,6 +37,9 @@ List Kitty windows running AI CLIs.
 
 Output columns: ID (window ID for -w option), CLI (detected AI type), TITLE, CWD.
 
+By default, the caller's own window is excluded to prevent deadlock when an AI
+sends messages to itself. Use --include-self for debugging purposes.
+
 Examples:
   ai-comm list-ai-windows
   ai-comm list-ai-windows --json
@@ -45,11 +48,14 @@ Examples:
 
 def list_ai_windows(
     as_json: Annotated[bool, typer.Option("--json", help="Output as JSON")] = False,
+    include_self: Annotated[
+        bool, typer.Option("--include-self", help="Include caller's own window")
+    ] = False,
 ) -> None:
     """List windows running AI CLIs."""
     try:
         client = KittenClient()
-        ai_windows = client.list_ai_windows()
+        ai_windows = client.list_ai_windows(include_self=include_self)
     except KittenError as e:
         typer.echo(f"Error: {e}", err=True)
         raise typer.Exit(1) from None
