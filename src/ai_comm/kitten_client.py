@@ -110,21 +110,6 @@ class KittenClient:
         text: str = result.data.get("text", "")
         return text
 
-    def get_text_hash(self, window_id: int, extent: str = "all") -> tuple[str, str]:
-        """Get text content and hash from window.
-
-        Args:
-            window_id: Target window ID
-            extent: "all" or "screen"
-
-        Returns:
-            Tuple of (text, hash)
-        """
-        result = self._call("get-text", "--window", str(window_id), "--extent", extent)
-        text: str = result.data.get("text", "")
-        hash_val: str = result.data.get("hash", "")
-        return text, hash_val
-
     def send_text(self, window_id: int, text: str) -> bool:
         """Send text to window.
 

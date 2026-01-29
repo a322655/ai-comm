@@ -115,22 +115,3 @@ class InteractionService:
         response = adapter.fetch_response(self.client, window_id, extent)
 
         return response, effective_parser
-
-    def send_and_wait(
-        self,
-        window_id: int,
-        message: str,
-        idle_seconds: int = 3,
-        timeout: float = 1800,
-        parser: str = "auto",
-        raw: bool = False,
-    ) -> tuple[str, float, str]:
-        """Send message and wait for response.
-
-        Returns:
-            Tuple of (response_text, elapsed_time, effective_parser_name)
-        """
-        self.send_message(window_id, message)
-        elapsed = self.wait_for_response(window_id, idle_seconds, timeout)
-        response, effective_parser = self.get_response(window_id, parser, raw=raw)
-        return response, elapsed, effective_parser

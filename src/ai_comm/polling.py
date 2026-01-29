@@ -59,34 +59,3 @@ def wait_for_idle(
             last_hash = current_hash
 
         time.sleep(poll_interval)
-
-
-def poll_until(
-    condition_fn: Callable[[], bool],
-    timeout: float = 1800,
-    poll_interval: float = 1.0,
-) -> float:
-    """Poll until condition is true.
-
-    Args:
-        condition_fn: Function that returns True when done
-        timeout: Maximum wait time in seconds
-        poll_interval: Time between checks in seconds
-
-    Returns:
-        Total elapsed time in seconds
-
-    Raises:
-        PollingTimeoutError: If timeout is reached
-    """
-    start_time = time.time()
-
-    while True:
-        elapsed = time.time() - start_time
-        if elapsed >= timeout:
-            raise PollingTimeoutError(timeout, elapsed)
-
-        if condition_fn():
-            return elapsed
-
-        time.sleep(poll_interval)
